@@ -2,22 +2,18 @@
 
 import socket
 import sys
+import telnetlib
 
-HOST = '127.0.0.1'
-PORT = 5555
+tn = telnetlib.Telnet("127.0.0.1")
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+tn.read_until(b"Username :", 2)
+tn.write(b"\n")
 
-try:
-    s.bind((HOST, PORT))
+tn.read_until(b"Password :", 2)
+tn.write(b"\n")
 
-except socket.error as msg:
-    print('Bind failed. Error Code : ' + str(msg[0]) + ' Message ' + msg[1])
-    sys.exit()
+tn.read_until(b"=>", 2)
+tn.write(b"exit\n")
 
-print('Socket bind complete')
+tn.close
 
-s.listen(10)
-conn, addr = s.accept()
-print('Connected with ' + addr[0] + ':' + str(addr[1]))
-call = input("Call: ")
