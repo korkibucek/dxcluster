@@ -1,3 +1,4 @@
 #!/usr/bin/python3
 
-print ("Boom")
+name = input("What's your name? ")
+print("Nice to meet you " + name + "!")
